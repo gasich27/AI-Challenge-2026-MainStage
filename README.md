@@ -152,3 +152,43 @@ Internal test пока не используется.
 
 Лучшая улучшенная модель сохраняется в `best_resnet18_improved.pth`.
 
+После fine-tuning ещё раз подобрал thresholds уже для улучшенной модели.
+
+Итоговый результат ResNet18:
+
+| Метрика | Baseline | Improved ResNet18 |
+|---|---:|---:|
+| Macro F1 | 0.4876 | 0.5069 |
+| Weighted F1 дефектов | 0.6105 | 0.6204 |
+| F1 quality | 0.5514 | 0.5708 |
+| Score | 0.5810 | 0.5956 |
+
+Новые thresholds сохраняются в `resnet18_improved_thresholds.json`.
+
+## PointNet++ baseline
+
+Baseline на геометрии находится в [`pointnetpp_baseline.ipynb`](pointnetpp_baseline.ipynb).
+
+Для него используются только вершины из NPZ:
+
+```text
+NPZ
+↓
+512 вершин
+↓
+PointNet++
+↓
+10 дефектов + quality
+```
+
+Для каждого объекта:
+
+- выбираются 512 вершин;
+- точки центрируются;
+- координаты нормализуются;
+- локальные признаки собираются двумя слоями Set Abstraction;
+- модель предсказывает 11 меток.
+
+Используется то же разбиение на train, validation и internal test, что и для ResNet18.
+
+Модель обучается с `BCEWithLogitsLoss` и весами для редких классов. Лучший checkpoint сохраняется в `best_pointnetpp.pth`.
