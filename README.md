@@ -149,7 +149,7 @@ Internal test пока не используется.
 | F1 quality | 0.5225 | 0.5514 |
 | Score | 0.5539 | 0.5810 |
 
-Подобранные пороги сохраняются в `resnet18_thresholds.json`.
+Подобранные пороги сохраняются в `artifacts/resnet/resnet18_thresholds.json`.
 
 ---
 ---
@@ -170,7 +170,7 @@ Internal test пока не используется.
 - обучается классификатор `fc`;
 - используется небольшой learning rate.
 
-Лучшая улучшенная модель сохраняется в `best_resnet18_improved.pth`.
+Лучшая улучшенная модель сохраняется в `models/resnet/best_resnet18_improved.pth`.
 
 После fine-tuning ещё раз подобрал thresholds уже для улучшенной модели.
 
@@ -183,7 +183,7 @@ Internal test пока не используется.
 | F1 quality | 0.5514 | 0.5708 |
 | Score | 0.5810 | 0.5956 |
 
-Новые thresholds сохраняются в `resnet18_improved_thresholds.json`.
+Новые thresholds сохраняются в `artifacts/resnet/resnet18_improved_thresholds.json`.
 
 ---
 ---
@@ -220,38 +220,76 @@ PointNet++
 
 | Метрика | Значение |
 |---|---:|
-| Macro F1 | 0.2770 |
-| Weighted F1 дефектов | 0.4382 |
-| F1 quality | 0.3145 |
-| Score | 0.3763 |
+| Macro F1 | 0.2658 |
+| Weighted F1 дефектов | 0.4200 |
+| F1 quality | 0.3260 |
+| Score | 0.3730 |
 
-Лучший checkpoint сохраняется в `best_pointnetpp.pth`.
+Лучший checkpoint сохраняется в `models/pointnetpp/best_pointnetpp.pth`.
 
-После обучения отдельно посмотрел ошибки по каждому классу.
+PointNet++ получает полезный сигнал только из вершин, но работает слабее модели по изображениям.
 
-Самые сложные классы:
+---
+---
 
-- `scale`
-- `intersection`
-- `artifacts`
-- `partial`
-- `open`
+## CatBoost mesh baseline
 
-После этого подобрал отдельный threshold для каждого класса.
+Baseline на простых признаках mesh находится в [`catboost_mesh_baseline.ipynb`](catboost_mesh_baseline.ipynb).
 
-| Метрика | Было | Стало |
-|---|---:|---:|
-| Macro F1 | 0.2770 | 0.2967 |
-| Weighted F1 дефектов | 0.4382 | 0.4570 |
-| F1 quality | 0.3145 | 0.3222 |
-| Score | 0.3763 | 0.3896 |
+Из NPZ извлекаются 27 признаков:
 
-Подобранные пороги сохраняются в `pointnetpp_thresholds.json`.
+- количество вершин и граней;
+- размеры bounding box;
+- пропорции объекта;
+- статистики координат;
+- длины рёбер;
+- площади треугольников.
 
-PointNet++ получает полезный сигнал только из вершин, но пока работает хуже ResNet18 по изображениям.
+Для каждой метки обучается отдельный `CatBoostClassifier`.
+
+Результат baseline с threshold `0.5`:
+
+| Метрика | Значение |
+|---|---:|
+| Macro F1 | 0.3642 |
+| Weighted F1 дефектов | 0.5364 |
+| F1 quality | 0.5009 |
+| Score | 0.5186 |
+
+CatBoost работает заметно лучше PointNet++, поэтому дальше можно отдельно улучшать этот baseline и проверять объединение двух подходов.
+
+Признаки сохраняются в `artifacts/train_mesh_features.csv`, а модели — в `models/catboost`.
+
+---
+---
+
+## Структура проекта
+
+```text
+eda.ipynb
+cnn_baseline.ipynb
+pointnetpp_baseline.ipynb
+catboost_mesh_baseline.ipynb
+
+data/
+├── train.csv
+└── train/
+
+models/
+├── resnet/
+├── pointnetpp/
+└── catboost/
+
+artifacts/
+├── resnet/
+└── train_mesh_features.csv
+
+assets/
+└── Frame 768.png
+```
 
 ---
 ---
 ---
 
-![alt text](<Frame 768.png>)
+![alt text](<assets/Frame 768.png>)
