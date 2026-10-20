@@ -8,6 +8,6 @@
 !cnn_baseline.ipynb
 !pointnetpp_baseline.ipynb
 !catboost_mesh_baseline.ipynb
-!mesh_fusion.ipynb
+!cnn_mesh_fusion.ipynb
 !assets/
 !assets/Frame 768.png

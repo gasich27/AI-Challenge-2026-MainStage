@@ -256,55 +256,9 @@ Baseline на простых признаках mesh находится в [`cat
 | F1 quality | 0.5009 |
 | Score | 0.5186 |
 
-CatBoost работает заметно лучше PointNet++, поэтому дальше можно отдельно улучшать этот baseline и проверять объединение двух подходов.
+CatBoost работает заметно лучше PointNet++. Следующий эксперимент — подбор его параметров на validation.
 
 Признаки сохраняются в `artifacts/train_mesh_features.csv`, а модели — в `models/catboost`.
-
----
----
-
-## CatBoost ensemble
-
-Добавил ещё две CatBoost-модели с другой глубиной и random seed.
-
-Итоговые вероятности:
-
-```text
-0.8 × baseline CatBoost
-+ 0.1 × CatBoost depth 5
-+ 0.1 × CatBoost depth 7
-```
-
-| Вариант | Score |
-|---|---:|
-| CatBoost baseline + tuning | 0.5361 |
-| CatBoost ensemble + tuning | 0.5423 |
-
-Модели ансамбля сохраняются в `models/catboost_ensemble`.
-
----
----
-
-## CatBoost + PointNet++
-
-Отдельный notebook для объединения находится в [`mesh_fusion.ipynb`](mesh_fusion.ipynb).
-
-Проверяю объединение вероятностей CatBoost ensemble и PointNet++.
-
-Лучший вариант:
-
-```text
-0.85 × CatBoost ensemble
-+ 0.15 × PointNet++
-```
-
-| Вариант | Score |
-|---|---:|
-| CatBoost ensemble | 0.5423 |
-| PointNet++ | 0.3852 |
-| CatBoost + PointNet++ | 0.5468 |
-
-Прирост небольшой, но PointNet++ добавляет дополнительный сигнал к CatBoost.
 
 ---
 ---
@@ -316,7 +270,7 @@ eda.ipynb
 cnn_baseline.ipynb
 pointnetpp_baseline.ipynb
 catboost_mesh_baseline.ipynb
-mesh_fusion.ipynb
+cnn_mesh_fusion.ipynb
 
 data/
 ├── train.csv
@@ -326,12 +280,12 @@ models/
 ├── resnet/
 ├── pointnetpp/
 ├── catboost/
-└── catboost_ensemble/
+└── catboost_tuned/
 
 artifacts/
 ├── resnet/
 ├── train_mesh_features.csv
-└── thresholds для ансамблей
+└── настройки моделей и thresholds
 
 assets/
 └── Frame 768.png
