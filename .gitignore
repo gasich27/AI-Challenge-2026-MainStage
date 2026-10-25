@@ -1,7 +1,7 @@
 # Ignore everything in the repository
 *
 
-# Keep project documentation and EDA notebook
+# Keep documentation, notebooks and README image
 !.gitignore
 !README.md
 !eda.ipynb
