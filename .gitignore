@@ -1,13 +1,20 @@
 # Ignore everything in the repository
 *
 
-# Keep documentation, notebooks and README image
+# Keep documentation and README image
 !.gitignore
 !README.md
-!eda.ipynb
-!cnn_baseline.ipynb
-!pointnetpp_baseline.ipynb
-!catboost_mesh_baseline.ipynb
-!cnn_mesh_fusion.ipynb
 !assets/
 !assets/Frame 768.png
+
+# Previous experiments (data, models and artifacts stay ignored)
+!archive/
+!archive/README.md
+!archive/*.ipynb
+
+# Experiments for each label
+!labels/
+!labels/*/
+!labels/*/README.md
+!labels/*/*.ipynb
+!labels/*/*.py

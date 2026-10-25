@@ -36,7 +36,7 @@
 
 В train находится 8 964 объекта.
 
-Данные, обученные модели и `artifacts` не хранятся в Git. Для запуска ноутбуков нужны `data/train.csv` и файлы PNG/NPZ в `data/train/`. Fusion запускается после обучения ResNet18 и CatBoost.
+Данные, обученные модели и `artifacts` не хранятся в Git. Для запуска ноутбуков нужны `data/train.csv` и файлы PNG/NPZ в `data/train/`. Данные общие для всех экспериментов, по папкам меток их не копируем.
 
 
 ## Метрика
@@ -51,9 +51,37 @@
 ---
 ---
 
+## Теперь разбираем каждую метку отдельно
+
+Общие baseline уже попробовал. Теперь хочу пройтись по каждой из 10 ошибок и отдельно по `quality`, как по 11 задачам.
+
+Для каждой метки своя папка в `labels/`. В ней будем:
+
+- смотреть примеры и разбирать разные случаи;
+- смотреть, где baseline ошибается;
+- пробовать признаки из mesh и изображений;
+- выбирать модель под задачу;
+- сравнивать F1, precision и recall;
+- записывать, что помогло, а что нет.
+
+Архитектуру заранее не закрепляем. Где хватит геометрии — используем её, где нужны изображения — проверим модели по рендерам. Общие признаки и модели можно переиспользовать.
+
+Начнём с `simple`, затем `lowpoly`, `noisy`, `artifacts`, `open`, `set`, `intersection`, `scale`, `partial`, `abstract`. В конце отдельно разберём `quality`.
+
+Разбиение оставляем общим для всех меток. Internal test не используем для подбора моделей и порогов.
+
+Пока подготовлены папки. Новых результатов по отдельным меткам ещё нет.
+
+---
+---
+
+## Предыдущие эксперименты
+
+Всё предыдущее сохранил в `archive/`: ноутбуки, имеющиеся модели, признаки и настройки. Ниже оставил историю результатов прошлых прогонов. Не все checkpoint после прошлой очистки уже восстановлены; наличие числа в README не означает, что соответствующая модель сейчас лежит на диске.
+
 ## EDA
 
-EDA находится в [`eda.ipynb`](eda.ipynb).
+EDA находится в [`eda.ipynb`](archive/eda.ipynb).
 
 Там посмотрел:
 
@@ -70,7 +98,7 @@ EDA находится в [`eda.ipynb`](eda.ipynb).
 
 ## ResNet18 baseline
 
-Основной ноутбук находится в [`cnn_baseline.ipynb`](cnn_baseline.ipynb).
+Основной ноутбук находится в [`cnn_baseline.ipynb`](archive/cnn_baseline.ipynb).
 
 Первый baseline обучается только на PNG:
 
@@ -153,7 +181,7 @@ Internal test пока не используется.
 | F1 quality | 0.5225 | 0.5514 |
 | Score | 0.5539 | 0.5810 |
 
-Подобранные пороги сохраняются в `artifacts/resnet/resnet18_thresholds.json`.
+Подобранные пороги сохраняются в `archive/artifacts/resnet/resnet18_thresholds.json`.
 
 ---
 ---
@@ -174,7 +202,7 @@ Internal test пока не используется.
 - обучается классификатор `fc`;
 - используется небольшой learning rate.
 
-Лучшая улучшенная модель сохраняется в `models/resnet/best_resnet18_improved.pth`.
+Лучшая улучшенная модель сохраняется в `archive/models/resnet/best_resnet18_improved.pth`.
 
 После fine-tuning ещё раз подобрал thresholds уже для улучшенной модели.
 
@@ -187,14 +215,14 @@ Internal test пока не используется.
 | F1 quality | 0.5514 | 0.5708 |
 | Score | 0.5810 | 0.5956 |
 
-Новые thresholds сохраняются в `artifacts/resnet/resnet18_improved_thresholds.json`.
+Новые thresholds сохраняются в `archive/artifacts/resnet/resnet18_improved_thresholds.json`.
 
 ---
 ---
 
 ## PointNet++ baseline
 
-Baseline на геометрии находится в [`pointnetpp_baseline.ipynb`](pointnetpp_baseline.ipynb).
+Baseline на геометрии находится в [`pointnetpp_baseline.ipynb`](archive/pointnetpp_baseline.ipynb).
 
 Для него используются только вершины из NPZ:
 
@@ -229,7 +257,7 @@ PointNet++
 | F1 quality | 0.3260 |
 | Score | 0.3730 |
 
-Лучший checkpoint сохраняется в `models/pointnetpp/best_pointnetpp.pth`.
+Лучший checkpoint сохраняется в `archive/models/pointnetpp/best_pointnetpp.pth`.
 
 PointNet++ получает полезный сигнал только из вершин, но работает слабее модели по изображениям.
 
@@ -238,7 +266,7 @@ PointNet++ получает полезный сигнал только из ве
 
 ## CatBoost mesh baseline
 
-Baseline на простых признаках mesh находится в [`catboost_mesh_baseline.ipynb`](catboost_mesh_baseline.ipynb).
+Baseline на простых признаках mesh находится в [`catboost_mesh_baseline.ipynb`](archive/catboost_mesh_baseline.ipynb).
 
 Из NPZ извлекаются 27 признаков:
 
@@ -262,7 +290,7 @@ Baseline на простых признаках mesh находится в [`cat
 
 CatBoost работает заметно лучше PointNet++.
 
-Признаки сохраняются в `artifacts/train_mesh_features.csv`, а модели — в `models/catboost`.
+Признаки сохраняются в `archive/artifacts/train_mesh_features.csv`, а модели — в `archive/models/catboost`.
 
 ---
 ---
@@ -278,14 +306,14 @@ CatBoost работает заметно лучше PointNet++.
 | Depth 7 | 0.5237 | 0.5415 |
 | 31 лист | 0.5227 | 0.5365 |
 
-Лучше всего получился `depth=7`, `l2_leaf_reg=10`. Модели сохраняются в `models/catboost_tuned`.
+Лучше всего получился `depth=7`, `l2_leaf_reg=10`. Модели сохраняются в `archive/models/catboost_tuned`.
 
 ---
 ---
 
 ## ResNet18 + CatBoost
 
-Объединение находится в [`cnn_mesh_fusion.ipynb`](cnn_mesh_fusion.ipynb).
+Объединение находится в [`cnn_mesh_fusion.ipynb`](archive/cnn_mesh_fusion.ipynb).
 
 Смешал вероятности двух моделей и подобрал общий вес на validation. Получилось 45% ResNet18 и 55% CatBoost. Для каждого класса подобрал свой threshold.
 
@@ -316,7 +344,7 @@ CatBoost работает заметно лучше PointNet++.
 
 Лучше получился вариант без весов. При этом `scale` стал хуже, поэтому прирост есть не по всем классам.
 
-Новые модели сохраняются отдельно в `models/catboost_features`.
+Новые модели сохраняются отдельно в `archive/models/catboost_features`.
 
 После этого снова проверил связку с ResNet18. Лучший вес теперь 50% на каждую модель.
 
@@ -325,7 +353,7 @@ CatBoost работает заметно лучше PointNet++.
 | Предыдущая связка | 0.6464 | 0.5929 | 0.6197 |
 | Связка с новыми признаками | 0.6527 | 0.6041 | 0.6284 |
 
-Текущий лучший score — **0.6284 на validation**. Настройки и thresholds сохранены в `artifacts/resnet_catboost_features_config.json`. Internal test пока не трогал.
+Лучший score прошлого этапа — **0.6284 на validation**. Путь для сохранения настроек и thresholds теперь `archive/artifacts/resnet_catboost_features_config.json`. Internal test пока не трогал.
 
 ---
 ---
@@ -333,28 +361,34 @@ CatBoost работает заметно лучше PointNet++.
 ## Структура проекта
 
 ```text
-eda.ipynb
-cnn_baseline.ipynb
-pointnetpp_baseline.ipynb
-catboost_mesh_baseline.ipynb
-cnn_mesh_fusion.ipynb
+README.md
+
+labels/
+├── simple/
+├── lowpoly/
+├── noisy/
+├── artifacts/
+├── open/
+├── set/
+├── intersection/
+├── scale/
+├── partial/
+├── abstract/
+└── quality/
+
+archive/
+├── README.md
+├── eda.ipynb
+├── cnn_baseline.ipynb
+├── pointnetpp_baseline.ipynb
+├── catboost_mesh_baseline.ipynb
+├── cnn_mesh_fusion.ipynb
+├── models/
+└── artifacts/
 
 data/
 ├── train.csv
 └── train/
-
-models/
-├── resnet/
-├── pointnetpp/
-├── catboost/
-├── catboost_tuned/
-└── catboost_features/
-
-artifacts/
-├── resnet/
-├── train_mesh_features.csv
-├── train_mesh_features_relative.csv
-└── настройки моделей и thresholds
 
 assets/
 └── Frame 768.png
