@@ -70,7 +70,7 @@
 
 Разбиение оставляем общим для всех меток. Internal test не используем для подбора моделей и порогов.
 
-Начал с `simple`: [ноутбук](labels/simple/simple.ipynb) показывает примеры и сравнивает сохранённые CatBoost, ResNet18 и их связку. На общей validation F1 по `simple`: 0.6805, 0.6966 и 0.7090. Обучил [отдельную ResNet18 для `simple`](labels/simple/simple_resnet.ipynb): F1 0.7014. Затем [настроил последний слой](labels/simple/simple_resnet_tuning.ipynb): F1 0.7048. Прирост небольшой, связка пока лучше. Результаты и разбор ошибок — в [папке метки](labels/simple/README.md).
+Начал с `simple`: [ноутбук](labels/simple/simple.ipynb) показывает примеры и сравнивает сохранённые CatBoost, ResNet18 и их связку. На общей validation F1 по `simple`: 0.6805, 0.6966 и 0.7090. Обучил [отдельную ResNet18 для `simple`](labels/simple/simple_resnet.ipynb): F1 0.7014. Это небольшой прирост к прежней ResNet18, но связка пока лучше. Результаты и разбор ошибок — в [папке метки](labels/simple/README.md).
 
 ---
 ---
