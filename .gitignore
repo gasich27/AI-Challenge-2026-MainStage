@@ -18,3 +18,4 @@
 !labels/*/README.md
 !labels/*/*.ipynb
 !labels/*/*.py
+!labels/simple/simple_geometry_review.csv
