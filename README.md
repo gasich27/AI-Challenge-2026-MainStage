@@ -80,7 +80,9 @@
 
 Для `lowpoly` проверил [геометрические признаки и CatBoost](labels/lowpoly/lowpoly_geometry.ipynb). На validation лучший F1 вырос с 0.5464 у старой связки до 0.5984. Двугранные углы помогли, а приближённая кривизна — нет. Результаты и ограничения — в [папке `lowpoly`](labels/lowpoly/README.md).
 
-Подготовил [следующий ноутбук для `lowpoly`](labels/lowpoly/lowpoly_dinov2.ipynb): CatBoost на готовых DINOv2 embeddings и их объединение с геометрией. Пока не запускал, новых метрик нет.
+Проверил [DINOv2 для `lowpoly`](labels/lowpoly/lowpoly_dinov2.ipynb) на готовых embeddings шести ракурсов. Отдельно DINOv2 дал F1 0.5471, а вместе с геометрическими признаками — **0.6383** на validation. До этого лучший геометрический вариант давал 0.5984. Примеры ошибок и подробности — в [папке `lowpoly`](labels/lowpoly/README.md).
+
+Подготовил [проверку `lowpoly` на internal test](labels/lowpoly/lowpoly_dinov2_test.ipynb) с сохранённой моделью и прежним порогом. Она ещё не запускалась.
 
 ---
 ---
