@@ -78,6 +78,8 @@
 
 Проверил DINOv2 в [отдельном ноутбуке](labels/simple/simple_dinov2_comparison.ipynb). Выбранная на validation связка DINOv2 со старой моделью дала F1 0.7261 на validation и 0.7223 на internal test. Старая связка на internal test получила 0.7017. Подробности — в [папке `simple`](labels/simple/README.md).
 
+Для `lowpoly` проверил [геометрические признаки и CatBoost](labels/lowpoly/lowpoly_geometry.ipynb). На validation лучший F1 вырос с 0.5464 у старой связки до 0.5984. Двугранные углы помогли, а приближённая кривизна — нет. Результаты и ограничения — в [папке `lowpoly`](labels/lowpoly/README.md).
+
 ---
 ---
 
