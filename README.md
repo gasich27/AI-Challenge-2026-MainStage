@@ -82,7 +82,7 @@
 
 Проверил [DINOv2 для `lowpoly`](labels/lowpoly/lowpoly_dinov2.ipynb) на готовых embeddings шести ракурсов. Отдельно DINOv2 дал F1 0.5471, а вместе с геометрическими признаками — **0.6383** на validation. До этого лучший геометрический вариант давал 0.5984. Примеры ошибок и подробности — в [папке `lowpoly`](labels/lowpoly/README.md).
 
-Подготовил [проверку `lowpoly` на internal test](labels/lowpoly/lowpoly_dinov2_test.ipynb) с сохранённой моделью и прежним порогом. Она ещё не запускалась.
+Проверил [сохранённую модель `lowpoly` на internal test](labels/lowpoly/lowpoly_dinov2_test.ipynb): F1 **0.6012** у DINOv2 + геометрии против 0.5698 у одной геометрии. Пороги оставил прежними, без подбора на test.
 
 ---
 ---
