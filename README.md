@@ -84,6 +84,10 @@
 
 Проверил [сохранённую модель `lowpoly` на internal test](labels/lowpoly/lowpoly_dinov2_test.ipynb): F1 **0.6012** у DINOv2 + геометрии против 0.5698 у одной геометрии. Пороги оставил прежними, без подбора на test.
 
+Для `noisy` проверил [локальную геометрию и сглаживание меша](labels/noisy/noisy_geometry.ipynb). CatBoost на старых 44 признаках дал F1 0.7783, с новыми признаками — **0.8025** на validation. Прежняя связка ResNet18 + CatBoost пока немного выше: 0.8060. Результаты и ошибки — в [папке `noisy`](labels/noisy/README.md).
+
+Запустил [DINOv2 для `noisy`](labels/noisy/noisy_dinov2.ipynb) на готовых embeddings. Только DINOv2 дал F1 **0.8065**, DINOv2 + геометрия — **0.8301** на той же validation. Это выше прежней связки ResNet18 + CatBoost (0.8060).
+
 ---
 ---
 
