@@ -1,5 +1,3 @@
-"""Признаки изменения поверхности после слабого сглаживания."""
-
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -35,6 +33,9 @@ def extract_one(item_id: str, data_dir: Path) -> dict:
     try:
         with np.load(path, allow_pickle=False) as mesh:
             vertices, faces = mesh['vertices'], mesh['faces']
+        if not np.issubdtype(faces.dtype, np.integer):
+            result['status'] = 'invalid_face_dtype'
+            return result
         if vertices.ndim != 2 or vertices.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
             result['status'] = 'bad_shape'
             return result

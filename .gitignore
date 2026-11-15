@@ -1,21 +1,34 @@
-# Ignore everything in the repository
 *
 
-# Keep documentation and README image
 !.gitignore
 !README.md
 !assets/
 !assets/Frame 768.png
 
-# Previous experiments (data, models and artifacts stay ignored)
 !archive/
 !archive/README.md
 !archive/*.ipynb
 
-# Experiments for each label
 !labels/
 !labels/*/
 !labels/*/README.md
 !labels/*/*.ipynb
 !labels/*/*.py
 !labels/simple/simple_geometry_review.csv
+
+!requirements.txt
+!src/
+!src/*.py
+!scripts/
+!scripts/*.py
+!tests/
+!tests/*.py
+!docs/
+!docs/*.md
+!docs/*.csv
+!docs/*.json
+!docs/experiments/
+!docs/experiments/*.md
+!docs/figures/
+!docs/figures/*.png
+!docs/figures/*.svg

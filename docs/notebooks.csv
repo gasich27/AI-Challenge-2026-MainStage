@@ -1,0 +1,22 @@
+notebook,code_cells,saved_output_cells,changes,status
+archive/catboost_mesh_baseline.ipynb,26,21,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+archive/cnn_baseline.ipynb,39,30,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+archive/cnn_mesh_fusion.ipynb,16,13,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+archive/eda.ipynb,20,18,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+archive/pointnetpp_baseline.ipynb,15,7,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/artifacts/artifacts_dinov2.ipynb,7,0,"binary_metrics, split_indices",Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/artifacts/artifacts_errors.ipynb,6,0,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/artifacts/artifacts_examples.ipynb,4,3,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/artifacts/artifacts_geometry.ipynb,8,0,"binary_metrics, split_indices",Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/artifacts/artifacts_mil.ipynb,8,0,split_indices,"Подготовлен, обучение MIL ещё не запускалось."
+labels/lowpoly/lowpoly_dinov2.ipynb,8,5,binary_metrics,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/lowpoly/lowpoly_dinov2_test.ipynb,6,4,binary_metrics,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/lowpoly/lowpoly_geometry.ipynb,13,11,binary_metrics,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/noisy/noisy_dinov2.ipynb,7,5,"binary_metrics, split_indices",Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/noisy/noisy_dinov2_test.ipynb,6,4,binary_metrics,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/noisy/noisy_dinov3.ipynb,10,0,"binary_metrics, split_indices",Не запускался: нет доступа к весам DINOv3.
+labels/noisy/noisy_geometry.ipynb,7,5,"binary_metrics, split_indices",Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/noisy/noisy_six_views.ipynb,6,0,"binary_metrics, split_indices",Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/simple/simple.ipynb,24,22,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/simple/simple_dinov2_comparison.ipynb,9,7,binary_metrics,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.
+labels/simple/simple_resnet.ipynb,9,7,,Сохранённые выводы относятся к предыдущим запускам. После рефакторинга полное обучение не повторялось.

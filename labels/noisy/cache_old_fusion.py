@@ -1,5 +1,3 @@
-"""Вероятности старой ResNet18 + CatBoost связки на validation."""
-
 from pathlib import Path
 import json
 

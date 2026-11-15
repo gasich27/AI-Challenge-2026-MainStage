@@ -1,5 +1,3 @@
-"""Локальные признаки рёбер для artifacts."""
-
 from pathlib import Path
 
 import numpy as np
@@ -28,6 +26,10 @@ def extract_one(item_id, data_dir):
         with np.load(path, allow_pickle=False) as mesh:
             vertices = mesh['vertices']
             faces = mesh['faces']
+
+        if not np.issubdtype(faces.dtype, np.integer):
+            result['status'] = 'invalid_face_dtype'
+            return result
 
         if vertices.ndim != 2 or vertices.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
             result['status'] = 'wrong_shape'
@@ -64,7 +66,7 @@ def extract_one(item_id, data_dir):
             result['status'] = 'few_valid_edges'
             return result
 
-        # Медиана длин всех рёбер, инцидентных каждой вершине.
+
         vertex_id = np.r_[edges[:, 0], edges[:, 1]]
         local = pd.Series(np.r_[length, length]).groupby(vertex_id).median()
         local_scale = (local.loc[edges[:, 0]].to_numpy() +

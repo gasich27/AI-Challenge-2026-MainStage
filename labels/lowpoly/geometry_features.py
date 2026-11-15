@@ -1,10 +1,3 @@
-"""Дополнительные признаки меша для эксперимента lowpoly.
-
-Для больших мешей берём четыре непрерывных участка списка граней. Это
-сохраняет настоящие пары соседних граней внутри участков, но признаки
-соседства становятся приближёнными. Объёмы выборок записываются в CSV.
-"""
-
 from __future__ import annotations
 
 import hashlib
@@ -95,7 +88,11 @@ def extract_one(item_id: str, train_dir: Path) -> dict:
     try:
         with np.load(path, allow_pickle=False) as mesh:
             vertices = np.asarray(mesh['vertices'], dtype=np.float64)
-            faces = np.asarray(mesh['faces'], dtype=np.int64)
+            faces = mesh['faces']
+        if not np.issubdtype(faces.dtype, np.integer):
+            result['status'] = 'invalid_face_dtype'
+            return result
+        faces = np.asarray(faces, dtype=np.int64)
         if vertices.ndim != 2 or vertices.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
             result['status'] = 'wrong_shape'
             return result
@@ -118,7 +115,7 @@ def extract_one(item_id: str, train_dir: Path) -> dict:
         if len(finite) > MAX_PCA_VERTICES:
             finite = finite[rng.choice(len(finite), MAX_PCA_VERTICES, replace=False)]
         result['duplicate_vertex_share'] = 1 - len(np.unique(finite, axis=0)) / len(finite)
-        # Отношение собственных значений локальной PCA — приближение кривизны.
+
         pca = _local_pca(vertices, rng)
         if len(pca):
             result['pca_curvature_mean'] = float(pca.mean())
@@ -175,7 +172,7 @@ def extract_one(item_id: str, train_dir: Path) -> dict:
         result['triangle_min_angle_p50'] = _percentile(min_angle, 50)
         result['triangle_max_angle_p90'] = _percentile(max_angle, 90)
 
-        # Каждое ребро связываем с реальными индексами его граней.
+
         f = sampled[good]
         edges = np.concatenate([f[:, [0, 1]], f[:, [1, 2]], f[:, [2, 0]]])
         face_ids = np.tile(np.arange(len(f)), 3)
