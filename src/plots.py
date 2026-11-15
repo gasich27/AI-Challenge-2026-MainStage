@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.metrics import precision_recall_curve, roc_curve, confusion_matrix
 from src.evaluation import binary_metrics
 
-COLORS = ['#377FC8', '#26998B', '#94A3B8', '#D97757']
+COLORS = ['#0098F8', '#21A038', '#F2C614']
 
 
 def setup_plot_style():
@@ -40,7 +40,7 @@ def evaluation_plot(y, p, threshold, title):
     axes[0, 1].set(xlabel='FPR', ylabel='TPR', title='ROC curve')
     grid = np.arange(.01, 1, .01)
     axes[1, 0].plot(grid, [binary_metrics(y, p, t)['F1'] for t in grid])
-    axes[1, 0].axvline(threshold, color=COLORS[3], linestyle='--')
+    axes[1, 0].axvline(threshold, color=COLORS[2], linestyle='--')
     axes[1, 0].set(xlabel='Threshold', ylabel='F1', title='Validation F1')
     matrix = confusion_matrix(y, np.asarray(p) >= threshold, labels=[0, 1])
     axes[1, 1].imshow(matrix, cmap='Blues')

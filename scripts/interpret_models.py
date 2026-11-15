@@ -39,6 +39,16 @@ def main():
     rows = []
     setup_plot_style()
     for label, filename, experiment, prediction_file, column in jobs:
+        examples = train[train[label].eq(1)].sample(3, random_state=42)
+        fig, axes = plt.subplots(1, 3, figsize=(16, 4))
+        for ax, (_, row) in zip(axes, examples.iterrows()):
+            with Image.open(ROOT/'data/train'/f'{row.item_id}.png') as image:
+                ax.imshow(image)
+            ax.set_title(f'{label} = 1 | {row.item_id[:8]}')
+            ax.axis('off')
+        fig.tight_layout()
+        save_figure(fig, ROOT/'docs/figures'/f'{label}_examples')
+        plt.close(fig)
         model = CatBoostClassifier().load_model(str(ROOT / 'labels' / label / 'models' / filename))
         columns = model.feature_names_
         X = align_features(features[columns], val.item_id)
@@ -66,7 +76,9 @@ def main():
         correlations.abs().nlargest(10).rename('abs_spearman').to_csv(ROOT/'docs'/f'{label}_correlations.csv')
         fig, ax = plt.subplots(figsize=(7, 4))
         values = [features.loc[train.loc[train[label].eq(target), 'item_id'], strongest].dropna().to_numpy() for target in [0, 1]]
-        ax.boxplot(values, showfliers=False)
+        ax.boxplot(values, showfliers=False, patch_artist=True,
+                   boxprops={'facecolor': '#0098F8', 'alpha': .3},
+                   medianprops={'color': '#21A038', 'linewidth': 2})
         ax.set_xticks([1, 2], ['0', '1'])
         ax.set(xlabel=label, ylabel=strongest, title='Train: распределение признака')
         save_figure(fig, ROOT/'docs/figures'/f'{label}_feature')
