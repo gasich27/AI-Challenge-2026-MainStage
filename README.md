@@ -34,12 +34,12 @@ $$score=10F1_{quality}+10F1_{defects,weighted}.$$
 
 ## По отдельным меткам
 
-| Метка | Выбранный вариант | F1 validation | F1 test |
-|---|---|---:|---:|
-| [simple](labels/simple/README.md) | DINOv2 + прежняя связка | .7261 | .7223 |
-| [lowpoly](labels/lowpoly/README.md) | DINOv2 + геометрия | .6383 | .6012 |
-| [noisy](labels/noisy/README.md) | DINOv2 + геометрия | .8301 | .8385 |
-| [artifacts](labels/artifacts/README.md) | DINOv2 + геометрия | .3717 | — |
+| Метка | Лучший общий baseline | F1 validation раньше | Выбранный вариант | F1 validation сейчас | Прирост F1 | F1 test |
+|---|---|---:|---|---:|---:|---:|
+| [simple](labels/simple/README.md) | ResNet18 + CatBoost | .7090 | DINOv2 + прежняя связка | .7261 | +.0171 | .7223 |
+| [lowpoly](labels/lowpoly/README.md) | ResNet18 + CatBoost | .5464 | DINOv2 + геометрия | .6383 | +.0919 | .6012 |
+| [noisy](labels/noisy/README.md) | ResNet18 + CatBoost | .8060 | DINOv2 + геометрия | .8301 | +.0241 | .8385 |
+| [artifacts](labels/artifacts/README.md) | ResNet18 + CatBoost | .3153 | DINOv2 + геометрия | .3717 | +.0564 | — |
 
 Идеи, графики и результаты опытов — в README каждой метки. Остальные метки пока проверены только в общей модели.
 
